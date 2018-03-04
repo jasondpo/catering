@@ -1,9 +1,22 @@
-<?php include 'include/header.php'; ?>
+<?php include 'include/header.php'; 
+// RETRIEVE MENU
+	$db = openDB();
+    $sql = "SELECT maincourse, dessert, drinks FROM menu WHERE clientid = "."'".$_GET["cid"]."'"; 
+    $ds = $db->query($sql);
+    $cnt = $ds->rowCount();  
+        
+        $row = $ds->fetch(); // Get data row
+		    
+	if ($row != true){ 
+        $_SESSION["menuBtn"]="false";
+        }
+        else{
+		$_SESSION["menuBtn"]="true";
+    } 	
+?>
 
   <body id="menu">
-	  
-  	
-  		
+	  	
 	<div class="catering-section-header menu-bkg">
 	    <div class="color-overlay"></div>
 	    <h12 class="v-centered"><span>Folder</span>Menu</h12>

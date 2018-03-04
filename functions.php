@@ -302,7 +302,6 @@ if (isset($_POST["deleteClientBtn"])){
 /////////////////////////////////////////// MENU SECTION STARTS ////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
-/*
 // SUBMIT MENU
 if(isset($_POST["submitMenuBtn"])){
     $db = openDB();
@@ -363,21 +362,7 @@ if (isset($_POST["deleteMenuBtn"])){
     header("Location:menu.php".$_SESSION['theGlobal'],true,303);	     
 }
 
-// RETRIEVE MENU
-	$db = openDB();
-    $sql = "SELECT maincourse, dessert, drinks FROM menu WHERE clientid = "."'".$_GET["cid"]."'"; 
-    $ds = $db->query($sql);
-    $cnt = $ds->rowCount();  
-        
-        $row = $ds->fetch(); // Get data row
-		    
-	if ($row != true){ 
-        $_SESSION["menuBtn"]="false";
-        }
-        else{
-		$_SESSION["menuBtn"]="true";
-    }
-*/          
+         
 //////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 /////////////////////////////////////////// MENU SECTION ENDS //////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -448,22 +433,6 @@ if (isset($_POST["deleteThemeBtn"])){
 }
 
 
-// RETRIEVE THEME
-// function retrieveTheme(){ // 
-	$db = openDB();
-    $sql = "SELECT theme, themedesc, clientid, userid FROM theme WHERE clientid = "."'".$_SESSION["cid"]."'"; 
-    $ds = $db->query($sql);
-    $cnt = $ds->rowCount();  
-        
-        $row = $ds->fetch(); // Get data row
-		    
-	if ($row != true){ 
-        $_SESSION["themeBtn"]="false";
-        }
-        else{
-		$_SESSION["themeBtn"]="true";
-    }  
-// }
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////// 

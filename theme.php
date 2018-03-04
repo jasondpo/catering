@@ -1,5 +1,20 @@
-<?php include 'include/header.php'; ?>
+<?php include 'include/header.php'; 
 
+// RETRIEVE Theme
+	$db = openDB();
+    $sql = "SELECT theme, themedesc, clientid, userid FROM theme WHERE clientid = "."'".$_SESSION["cid"]."'"; 
+    $ds = $db->query($sql);
+    $cnt = $ds->rowCount();  
+        
+    $row = $ds->fetch(); // Get data row
+		    
+	if ($row != true){ 
+        $_SESSION["themeBtn"]="false";
+        }
+        else{
+		$_SESSION["themeBtn"]="true";
+    } 
+?>
   <body id="theme">
 	  
 	<?php ?>  
