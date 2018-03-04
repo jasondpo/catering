@@ -1,4 +1,21 @@
-<?php include 'include/header.php'; ?>
+<?php include 'include/header.php'; 
+	
+// RETRIEVE PERSONNEL
+	$db = openDB();
+    $sql = "SELECT cooks, waiters, description FROM personnel WHERE clientid = "."'".$_GET["cid"]."'"; 
+    $ds = $db->query($sql);
+    $cnt = $ds->rowCount();  
+        
+        $row = $ds->fetch(); // Get data row
+		    
+	if ($row != true){ 
+        $_SESSION["personnelBtn"]="false";
+        }
+        else{
+		$_SESSION["personnelBtn"]="true";
+    } 	
+	
+?>
 
   <body id="personnel">
 	  
@@ -26,20 +43,23 @@
 		
 		<div class="row row-width">
 			<div class="col-sm-12">
-					<form action="location.php" autocomplete='off' method="post">
+<!-- 				The number boxes should be side to side -->
+					<form action="<?php echo $fullURL; ?>" autocomplete='off' method="post">
 					Cooks:<br>
-					<input type="number" id="username" class="inputClass" name="mainUsername" value="User Name"/>
+					<input type="number" class="inputClass" name="capCooks" placeholder="Number of cooks" value="<?php echo $row['cooks'];?>"/>
 					<br>
 					<br>
 					Waiters:<br>
-					<input type="number" id="username" class="inputClass" name="mainUsername" value="User Name"/>
+					<input type="number" class="inputClass" name="capWaiters" placeholder="Number of waiters" value="<?php echo $row['waiters'];?>"/>
 					<br>
 					<br>
 					Description:<br>		
-					<textarea cols="40" name="comments" class="inputClass" rows="6" placeholder="Description..." onblur="if(this.placeholder==''){ this.placeholder='Description...'; }" onfocus="if(this.placeholder=='Description...'){ this.placeholder=''};"></textarea>
+					<textarea cols="40" name="capPersonnelDesc" class="inputClass" rows="6" placeholder="Description..." onblur="if(this.placeholder==''){ this.placeholder='Description...'; }" onfocus="if(this.placeholder=='Description...'){ this.placeholder=''};"><?php echo $row['description'];?></textarea>
 					<br>
-					
-					<input type="submit" name="submitMenuBtn" class="button" value="submit" />
+					<br>
+					<input type="submit" name="submitPersonnelBtn" class="button"  style="display: <?php if($_SESSION["personnelBtn"]=="false"){echo "block";}else{echo "none";} ?>" value="Submit" />
+					<input type="submit" name="updatePersonnelBtn" class="button" style="display: <?php if($_SESSION["personnelBtn"]=="true"){echo "block";}else{echo "none";} ?>" value="Update" />
+					<input type="submit" name="deletePersonnelBtn" class="button-left" style="display: <?php if($_SESSION["personnelBtn"]=="true"){echo "block";}else{echo "none";} ?>" value="Delete All" />
 							
 				</form>
 				

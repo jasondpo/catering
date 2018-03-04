@@ -127,9 +127,10 @@ function createTables(){
 	    // Personnel TABLE
 		$sql="CREATE TABLE personnel ("
 	    ."id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,"
-	    ."maincourse TEXT NOT NULL,"
-	    ."dessert TEXT NOT NULL,"
-	    ."drinks TEXT NOT NULL,"
+	    ."userid TEXT NOT NULL,"	    
+	    ."cooks TEXT NOT NULL,"
+	    ."waiters TEXT NOT NULL,"
+	    ."description TEXT NOT NULL,"
 	    ."clientid VARCHAR(50) NOT NULL);";
 	   	    
 		$result=$db->query($sql);
@@ -433,13 +434,74 @@ if (isset($_POST["deleteThemeBtn"])){
 }
 
 
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 /////////////////////////////////////////// THEME SECTION ENDS //////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+/////////////////////////////////////////// PERSONNEL STARTS //////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
+// SUBMIT PERSONNEL
+if(isset($_POST["submitPersonnelBtn"])){
+    $db = openDB();
+        $sql ="INSERT INTO personnel (cooks, waiters, description, clientid, userid)"
+            ." VALUES " 
+            ."('".$_POST["capCooks"]."','".$_POST["capWaiters"]."',:thePersonnelDesc,'".$_SESSION["cid"]."','".$_SESSION["userId"]."' );";
+
+	       $ps=$db->prepare($sql);
+		   $ps->bindParam(':thePersonnelDesc',$_POST['capPersonnelDesc'],PDO::PARAM_STR);
+		   $ps->execute();    
+                    
+        $result = $db->query($sql);
+        if ( $result != true){
+//             ECHO "<div class='alertBoxWrapper'><div class='alertBox'><h102>Unable to save Menu data</h102></div></div>";
+        }
+        else{
+            //ECHO "<div class='alertBoxWrapper'><div class='alertBox'><h102>Log data saved</h102></div></div>";
+        }
+		header("Location:personnel.php".$_SESSION['theGlobal'],true,303);
+        exit(); 
+}
+
+
+ // UPDATE PERSONNEL
+if (isset($_POST["updatePersonnelBtn"])){
+    $db = openDB();
+        $sql ="UPDATE personnel SET cooks = '".$_POST["capCooks"]."', waiters = '".$_POST["capWaiters"]."', description = :thePersonnelDesc WHERE clientid = '".$_SESSION["cid"]."'"; 
+                
+			$ps=$db->prepare($sql);
+		    $ps->bindParam(':thePersonnelDesc',$_POST["capPersonnelDesc"],PDO::PARAM_STR);
+		    $ps->execute();                                            
+
+        $result = $db->query($sql);
+        if ( $result != true){
+//           ECHO "<div class='alertBoxWrapper'><div class='alertBox'><h102>Could not update project info</h102></div></div>";
+        }
+        else{
+//             ECHO "<div class='alertBoxWrapper'><div class='alertBox'><h102>Project updated</h102></div></div>";
+        }
+    header("Location:personnel.php".$_SESSION['theGlobal'],true,303);	     	  	     	  
+
+}
+
+// DELETE PERSONNEL
+if (isset($_POST["deletePersonnelBtn"])){
+    $db = openDB();
+        $sql ="DELETE FROM `personnel` WHERE clientid = "."'".$_SESSION["cid"]."'"; 
+        $result = $db->query($sql);
+        if ( $result != true){           
+		//ECHO "<script>alert('Project could not be deleted');</script>";
+        }
+        else{
+		//ECHO "<script>alert('Project deleted');</script>";
+        }
+    header("Location:personnel.php".$_SESSION['theGlobal'],true,303);	     
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+/////////////////////////////////////////// PERSONNEL ENDS //////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
 
 /////////////////////////// Store Locations?? ///////////////////////////

@@ -1,4 +1,5 @@
 <?php include 'include/header.php'; 
+	
 // RETRIEVE MENU
 	$db = openDB();
     $sql = "SELECT maincourse, dessert, drinks FROM menu WHERE clientid = "."'".$_GET["cid"]."'"; 
